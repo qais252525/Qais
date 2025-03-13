@@ -1,973 +1,1245 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xact Mind</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Header with Tailwind CSS</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    @keyframes marquee-reverse {
+      0% {
+        transform: translateX(-50%);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .animate-marquee {
+      animation: marquee 47s linear infinite;
+    }
+
+    .animate-marquee-reverse {
+      animation: marquee-reverse 47s linear infinite;
+    }
+
+    /* Important: This ensures the animation actually pauses */
+    .paused {
+      animation-play-state: paused !important;
+    }
+  </style>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+  
+  /* Custom arrow for links */
+  .arrow-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    color: #15847D;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  
+  .arrow-link:hover {
+    text-decoration: underline;
+  }
+  
+  .arrow-link svg {
+    margin-left: 4px;
+    transition: transform 0.2s ease;
+  }
+  
+  .arrow-link:hover svg {
+    transform: translateX(3px);
+  }
+
+  .feature-section {
+    min-height: 70vh;
+    padding: 60px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .video-container.active {
+    opacity: 1;
+  }
+
+  .videos-column {
+    position: sticky;
+    top: 50px;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .videos-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-height: 500px;
+  }
+
+  @media (max-width: 768px) {
+    .feature-section {
+      min-height: auto;
+      padding: 40px 0;
+    }
+    
+    .videos-column {
+      position: static;
+      height: auto;
+      margin-bottom: 30px;
+    }
+    
+    .videos-wrapper {
+      height: 300px;
+    }
+    
+    .video-container {
+      position: relative;
+      height: 300px;
+    }
+    
+    .video-container:not(.active) {
+      display: none;
+    }
+  }
+</style>
+
+<!-- 
+              >>>>>>>>>>>>>>>>>>>> Header code >>>>>>>>>>>>>>>>>>>>> -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#027E6F',
+              hover: '#026b5f',
+              
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- >>>>>>>>>>>>>>>>>>>>>>>>>> next <<<<<<<<<<<<<<<<<<<<<<<< -->
 </head>
+<body class="font-family: 'Inter', sans-serif;">
+  <header class="border- border-gray-200 sticky top-0 bg-white z-50 py-4">
+    <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-14">
+      <nav class="flex h-18 ">
+        <!-- Logo -->
+        <a href="/" class="flex items-center mr-10">
+          <div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <span class="ml-2 text-xl font-bold">WritePro</span>
+        </a>
 
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-1">
+          <!-- Product Dropdown -->
+          <div class="relative" x-data="{ open: false }">
+            <button 
+              class="flex items-center px-3 py-2 text-sm font-medium hover:text-primary"
+              onclick="toggleDropdown('product')"
+            >
+              Product
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4 transition-transform dropdown-icon" data-dropdown="product">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg border border-gray-200 z-50 hidden dropdown-menu" data-dropdown="product">
+              <div class="p-4">
+                <h3 class="text-sm font-medium mb-2">Learn</h3>
+                <ul class="space-y-2">
+                  <li>
+                    <a href="/features" class="block text-sm hover:text-primary">
+                      Features
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/demo" class="block text-sm hover:text-primary">
+                      Product Demo
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/ai" class="block text-sm hover:text-primary">
+                      AI Technology
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/security" class="block text-sm hover:text-primary">
+                      Trust & Security
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="p-4 border-t border-gray-200">
+                <h3 class="text-sm font-medium mb-2">Download</h3>
+                <ul class="space-y-2">
+                  <li>
+                    <a href="/desktop" class="block text-sm hover:text-primary">
+                      Desktop
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/mobile" class="block text-sm hover:text-primary">
+                      Mobile
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/browser" class="block text-sm hover:text-primary">
+                      Browser
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Navigation bar Section 1 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-<body style="font-family: sans-serif">
+          <!-- Work Dropdown -->
+          <div class="relative">
+            <button 
+              class="flex items-center px-3 py-2 text-sm font-medium hover:text-primary"
+              onclick="toggleDropdown('work')"
+            >
+              Work
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4 transition-transform dropdown-icon" data-dropdown="work">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg border border-gray-200 z-50 hidden dropdown-menu" data-dropdown="work">
+              <div class="p-4">
+                <h3 class="text-sm font-medium mb-2">By Team Size</h3>
+                <ul class="space-y-2">
+                  <li>
+                    <a href="/enterprise" class="block text-sm hover:text-primary">
+                      Enterprise
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/teams" class="block text-sm hover:text-primary">
+                      Teams & Businesses
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/individuals" class="block text-sm hover:text-primary">
+                      Individuals
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
+          <!-- Education Dropdown -->
+          <div class="relative">
+            <button 
+              class="flex items-center px-3 py-2 text-sm font-medium hover:text-primary"
+              onclick="toggleDropdown('education')"
+            >
+              Education
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4 transition-transform dropdown-icon" data-dropdown="education">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50 hidden dropdown-menu" data-dropdown="education">
+              <div class="p-4">
+                <ul class="space-y-2">
+                  <li>
+                    <a href="/students" class="block text-sm hover:text-primary">
+                      Students
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/institutions" class="block text-sm hover:text-primary">
+                      Institutions
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pricing Link -->
+          <a href="/pricing" class="px-3 py-2 text-sm font-medium hover:text-primary">
+            Pricing
+          </a>
+
+          <!-- Resources Dropdown -->
+          <div class="relative">
+            <button 
+              class="flex items-center px-3 py-2 text-sm font-medium hover:text-primary"
+              onclick="toggleDropdown('resources')"
+            >
+              Resources
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4 transition-transform dropdown-icon" data-dropdown="resources">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg border border-gray-200 z-50 hidden dropdown-menu" data-dropdown="resources">
+              <div class="p-4">
+                <h3 class="text-sm font-medium mb-2">Learn</h3>
+                <ul class="space-y-2">
+                  <li>
+                    <a href="/blog" class="block text-sm hover:text-primary">
+                      Blog
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/stories" class="block text-sm hover:text-primary">
+                      Customer Stories
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/help" class="block text-sm hover:text-primary">
+                      Help Center
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Desktop CTA Buttons -->
+        <div class="hidden md:flex items-center space-x-4 ml-auto ">
+          <a href="/contact" class="text-sm font-medium hover:text-primary">
+            Contact Sales
+          </a>
+          <a href="/login" class="text-sm font-medium hover:text-primary">
+            Log in
+          </a>
+          <a href="/signup" class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md text-sm font-medium flex">
+            <span class="font-bold">Get Grammarly</span>
+            <span class="ml-1">It's free</span>
+            <span class="items-center flex pl-2"><svg width="11" height="10" viewBox="0 0 11 10" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-component-name="cta-arrow"><path d="M5.056 1.748L6.144 0.691999L10.304 4.836V4.948L6.144 9.108L5.056 8.036L7.44 5.652H0.304V4.132H7.424L5.056 1.748Z"></path></svg></span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden flex items-center">
+          <a href="/login" class="text-sm font-medium mr-4 hover:text-primary">
+            Log in
+          </a>
+          <button
+            onclick="toggleMobileMenu()"
+            class="p-2 rounded-md hover:bg-gray-100"
+            id="mobile-menu-button"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="md:hidden bg-white border-t border-gray-200 hidden" id="mobile-menu">
+      <div class="px-4 pt-2 pb-4 space-y-1">
+        <!-- Mobile Product Dropdown -->
+        <div>
+          <button
+            onclick="toggleMobileDropdown('mobile-product')"
+            class="w-full flex items-center justify-between py-2 text-base font-medium"
+          >
+            Product
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 transition-transform mobile-dropdown-icon" data-dropdown="mobile-product">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="pl-4 pb-2 hidden mobile-dropdown-menu" data-dropdown="mobile-product">
+            <h3 class="text-sm font-medium my-2">Learn</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="/features" class="block text-sm hover:text-primary">
+                  Features
+                </a>
+              </li>
+              <li>
+                <a href="/demo" class="block text-sm hover:text-primary">
+                  Product Demo
+                </a>
+              </li>
+              <li>
+                <a href="/ai" class="block text-sm hover:text-primary">
+                  AI Technology
+                </a>
+              </li>
+            </ul>
+            <h3 class="text-sm font-medium my-2 mt-4">Download</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="/desktop" class="block text-sm hover:text-primary">
+                  Desktop
+                </a>
+              </li>
+              <li>
+                <a href="/mobile" class="block text-sm hover:text-primary">
+                  Mobile
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Mobile Work Dropdown -->
+        <div>
+          <button
+            onclick="toggleMobileDropdown('mobile-work')"
+            class="w-full flex items-center justify-between py-2 text-base font-medium"
+          >
+            Work
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 transition-transform mobile-dropdown-icon" data-dropdown="mobile-work">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="pl-4 pb-2 hidden mobile-dropdown-menu" data-dropdown="mobile-work">
+            <h3 class="text-sm font-medium my-2">By Team Size</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="/enterprise" class="block text-sm hover:text-primary">
+                  Enterprise
+                </a>
+              </li>
+              <li>
+                <a href="/teams" class="block text-sm hover:text-primary">
+                  Teams & Businesses
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Mobile Education Dropdown -->
+        <div>
+          <button
+            onclick="toggleMobileDropdown('mobile-education')"
+            class="w-full flex items-center justify-between py-2 text-base font-medium"
+          >
+            Education
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 transition-transform mobile-dropdown-icon" data-dropdown="mobile-education">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="pl-4 pb-2 hidden mobile-dropdown-menu" data-dropdown="mobile-education">
+            <ul class="space-y-2">
+              <li>
+                <a href="/students" class="block text-sm hover:text-primary">
+                  Students
+                </a>
+              </li>
+              <li>
+                <a href="/institutions" class="block text-sm hover:text-primary">
+                  Institutions
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Mobile Pricing Link -->
+        <a href="/pricing" class="block py-2 text-base font-medium">
+          Pricing
+        </a>
+
+        <!-- Mobile Resources Dropdown -->
+        <div>
+          <button
+            onclick="toggleMobileDropdown('mobile-resources')"
+            class="w-full flex items-center justify-between py-2 text-base font-medium"
+          >
+            Resources
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 transition-transform mobile-dropdown-icon" data-dropdown="mobile-resources">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="pl-4 pb-2 hidden mobile-dropdown-menu" data-dropdown="mobile-resources">
+            <h3 class="text-sm font-medium my-2">Learn</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="/blog" class="block text-sm hover:text-primary">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a href="/stories" class="block text-sm hover:text-primary">
+                  Customer Stories
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Mobile CTA Buttons -->
+        <div class="pt-4 space-y-4">
+          <a href="/contact" class="block text-center py-2 text-primary border border-primary rounded-md">
+            Contact Sales
+          </a>
+          <a href="/signup" class="block text-center py-2 bg-primary hover:bg-primary-hover text-white rounded-md">
+            <span class="font-bold">Get Started</span>
+            <span class="ml-1">It's free</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- JavaScript for dropdown functionality -->
+  <script>
+    // Track active dropdown
+    let activeDropdown = null;
     
+    // Toggle desktop dropdown
+    function toggleDropdown(dropdown) {
+      const dropdownMenu = document.querySelector(`.dropdown-menu[data-dropdown="${dropdown}"]`);
+      const dropdownIcon = document.querySelector(`.dropdown-icon[data-dropdown="${dropdown}"]`);
+      
+      // Close any open dropdown
+      if (activeDropdown && activeDropdown !== dropdown) {
+        const activeMenu = document.querySelector(`.dropdown-menu[data-dropdown="${activeDropdown}"]`);
+        const activeIcon = document.querySelector(`.dropdown-icon[data-dropdown="${activeDropdown}"]`);
+        
+        if (activeMenu) activeMenu.classList.add('hidden');
+        if (activeIcon) activeIcon.classList.remove('rotate-180');
+      }
+      
+      // Toggle current dropdown
+      if (dropdownMenu) {
+        dropdownMenu.classList.toggle('hidden');
+        dropdownIcon.classList.toggle('rotate-180');
+        
+        // Update active dropdown
+        activeDropdown = dropdownMenu.classList.contains('hidden') ? null : dropdown;
+      }
+    }
+    
+    // Toggle mobile menu
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuButton = document.getElementById('mobile-menu-button');
+      
+      if (mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.remove('hidden');
+        menuButton.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        `;
+      } else {
+        mobileMenu.classList.add('hidden');
+        menuButton.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        `;
+        
+        // Close all mobile dropdowns
+        const mobileDropdowns = document.querySelectorAll('.mobile-dropdown-menu');
+        const mobileIcons = document.querySelectorAll('.mobile-dropdown-icon');
+        
+        mobileDropdowns.forEach(dropdown => {
+          dropdown.classList.add('hidden');
+        });
+        
+        mobileIcons.forEach(icon => {
+          icon.classList.remove('rotate-180');
+        });
+      }
+    }
+    
+    // Toggle mobile dropdown
+    function toggleMobileDropdown(dropdown) {
+      const dropdownMenu = document.querySelector(`.mobile-dropdown-menu[data-dropdown="${dropdown}"]`);
+      const dropdownIcon = document.querySelector(`.mobile-dropdown-icon[data-dropdown="${dropdown}"]`);
+      
+      if (dropdownMenu) {
+        dropdownMenu.classList.toggle('hidden');
+        dropdownIcon.classList.toggle('rotate-180');
+      }
+    }
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('button') && !event.target.closest('.dropdown-menu')) {
+        const dropdowns = document.querySelectorAll('.dropdown-menu');
+        const icons = document.querySelectorAll('.dropdown-icon');
+        
+        dropdowns.forEach(dropdown => {
+          dropdown.classList.add('hidden');
+        });
+        
+        icons.forEach(icon => {
+          icon.classList.remove('rotate-180');
+        });
+        
+        activeDropdown = null;
+      }
+    });
+  </script>
 
-    <nav class="navbar navbar-expand-lg navbar-light container     pt-1 pb-0 " style="border-bottom: 1px #00000026 solid; ">
-
-        <a href="" class="nav-brand py-lg-0"> <img src="./Template/logo.webp" alt="" width="185px" height="69px"></a>
-
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navigation">
-            <span class="navbar-toggler-icon"> </span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navigation">
-            <ul class="navbar-nav m-auto gap-3" style="font-size: 18px; font-weight: 600; font-family:inherit; ;">
-                <li class="nav-item"><a href="" class="nav-link">Home</a></li>
-                <li class="nav-item dropdown">
-                    <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Services</a>
-                    <div class="dropdown-menu">
-                        <a href="" class="dropdown-item"></a>
-                        <a href="" class="dropdown-item">Machine and Deep Learning</a>
-                        <a href="" class="dropdown-item">Data Analytics and Visualizations</a>
-                        <a href="" class="dropdown-item">Natural Language Processing</a>
-                        <a href="" class="dropdown-item">Chatbots and Generative AI</a>
-                    </div>
-                </li>
-                <li class="nav-item"><a href="" class="nav-link">Company</a></li>
-                <li class="nav-item"><a href="" class="nav-link">Portfolio</a></li>
-                <li class="nav-item dropdown">
-                    <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Resources</a>
-                    <div class="dropdown-menu">
-                        <a href="" class="dropdown-item"></a>
-                        <a href="" class="dropdown-item">Machine and Deep Learning</a>
-                        <a href="" class="dropdown-item">Data Analytics and Visualizations</a>
-                        <a href="" class="dropdown-item">Natural Language Processing</a>
-                        <a href="" class="dropdown-item">Chatbots and Generative AI</a>
-                    </div>
-                </li>
-            </ul>
-            <ul class="mx-lg-5 list-unstyled pt-2 ">
-                <li style="font-size: 12px; padding-left: 5px; background: rgba(217, 217, 217, 0.249) ; ">Client
-                    Support <img src="./icon.png" alt="" width="20px"></li>
-                <li><b>+44-7939-44496</b>7</li>
-            </ul>
-        </div>
-
-        <button type="button" class="btn btn-primary " style="padding: 10px 20px;">Contact Us</button>
-    </nav>
-
-
-    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Hero Section   section 2   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-
-    <div class="container-fluid">
-        <div class="container " style="padding-top: 100px; padding-bottom: 50px;">
-
-            <div class="row  ">
-                <div class="col-lg-5 bg-">
-
-                    <h1 class="pt-lg-5    pl-0px   fw-md-bolder fw-bold fs-" style="font-size:46px; line-height: 1em; text-spacing-trim: -1px;"  >Xact Mind is a UK based leading Software and AI development company</h1>
-
-                    <h3 class="pt-lg-3  pt-md-2 pt-1   fw-lg-bolder   fw-normal  lh-base"    >providing comprehensive Software and AI solutions tailored to meet the evolving needs of customers and businesses.<h3>   
-                    
-                    <span><button type="button" class="btn btn-primary   mt-sm-4 mt-3  " style="padding: 10px 20px;">Schedule a Free Consultations</button>
-                        <button type="button" class="btn btn-info mt-sm-4 mt-3  border-0 text-primary " style="padding: 10px 20px; background-color: #dee0ff;">Services</button></span>          
+<main>
+  <section class="py-16 px-4 md:px-6 lg:px-8 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+            <div class="w-full md:w-1/2 space-y-10">
+                <div>
+                    <h1 class="text-[3.75rem;] md:text-6xl leading-[4.125rem;] font-semibold text-gray-900">Responsible AI that ensures your writing and reputation shine</h1>
+                    <div class="h-10"></div>
+                    <p class="text-xl text-gray-700 ">Work with an AI writing partner that helps you find the words you need—to write that tricky email, to get your point across, to keep your work moving.</p>
                 </div>
-
-                <div class="col-lg-7 mt-lg-0 mt-3"><img src="./her.png" alt="" width="100%" height="100%"></div>
+                <div class="space-y-4">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 text-white px-4 py-5 text-lg h-auto">
+                            <span class="font-bold text-sm">Sign up</span>
+                            <span class="ml-1 text-sm">It's free</span>
+                            <span class="ml-2" aria-hidden="true">
+                                <svg width="11" height="10" viewBox="0 0 11 10" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5.056 1.748L6.144 0.691999L10.304 4.836V4.948L6.144 9.108L5.056 8.036L7.44 5.652H0.304V4.132H7.424L5.056 1.748Z"></path>
+                                </svg>
+                            </span>
+                        </button>
+                        <button type="button" class="flex items-center justify-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 px-4 py-5 rounded-md text-lg">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+                                <g clip-path="url(#clip0)">
+                                    <path d="M16.0008 8.17753C16.0008 7.51976 15.9463 7.03976 15.8285 6.54199H8.16406V9.51085H12.6629C12.5722 10.2486 12.0824 11.3598 10.994 12.1064L10.9787 12.2058L13.4021 14.0456L13.5699 14.062C15.1119 12.6664 16.0008 10.6131 16.0008 8.17753Z" fill="#4285F4"></path>
+                                    <path d="M8.1636 15.9999C10.3676 15.9999 12.218 15.2887 13.5695 14.0621L10.9935 12.1065C10.3042 12.5776 9.37899 12.9065 8.1636 12.9065C6.00489 12.9065 4.17272 11.5109 3.5196 9.58203L3.42386 9.59L0.904047 11.5011L0.871094 11.5909C2.21348 14.2042 4.97084 15.9999 8.1636 15.9999Z" fill="#34A853"></path>
+                                    <path d="M3.52021 9.5824C3.34788 9.08463 3.24815 8.55126 3.24815 8.00017C3.24815 7.44903 3.34788 6.91572 3.51115 6.41795L3.50658 6.31193L0.95518 4.37012L0.871703 4.40903C0.31844 5.49349 0.000976562 6.71129 0.000976562 8.00017C0.000976562 9.28906 0.31844 10.5068 0.871703 11.5913L3.52021 9.5824Z" fill="#FBBC05"></path>
+                                    <path d="M8.16364 3.09331C9.6965 3.09331 10.7305 3.7422 11.3201 4.28446L13.6239 2.08C12.209 0.791114 10.3677 0 8.16364 0C4.97087 0 2.21349 1.79554 0.871094 4.40885L3.51054 6.41777C4.17274 4.48888 6.00492 3.09331 8.16364 3.09331Z" fill="#EB4335"></path>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0">
+                                        <rect width="16" height="16" fill="white"></rect>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <span class="text-sm">Sign up with Google</span>
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-600">By signing up, you agree to the <a href="https://www.grammarly.com/terms" target="_blank" class="text-primary hover:underline">Terms and Conditions</a> and <a href="https://www.grammarly.com/privacy-policy" target="_blank" class="text-primary hover:underline">Privacy Policy</a>. California residents, see our <a href="https://www.grammarly.com/privacy-policy#sectionSingleColumn_1czKJnBc2oWeqKXhcP1oFx" target="_blank" class="text-primary hover:underline">CA Notice at Collection</a>.</p>
+                </div>
             </div>
-
+            <div class="w-full md:w-1/2 relative">
+                <div class="relative rounded-lg overflow-hidden shadow-xl">
+                    <video id="hero-video" class="w-full h-auto rounded-lg" autoplay loop playsinline poster="https://static-web.grammarly.com/1e6ajr2k4140/Vy9N3wTqgo1HSVYiK4Xx2/1175851dc871ffd493a348be3f76ffbf/scroll-2.png">
+                        <source src="https://static-web.grammarly.com/1e6ajr2k4140/23h4g1mYtwNqn6ITO66YPH/4dc21be97a0fb1e517a37d5e7ab2ae8c/writing_expert_first_x2.mp4" type="video/mp4">
+                        Sorry, your browser doesn't support embedded videos
+                    </video>
+                    <button aria-label="Pause animation" class="absolute bottom-4 right-4 bg-white bg-opacity-0 hover:bg-opacity-10 rounded-full p-2 transition-all">
+                        <div class="h-8 w-8 rounded-full border-2 border-gray-600 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pause h-4 w-4 text-gray-600">
+                                <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+                                <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+                <span class="sr-only">The user composes a project proposal using Grammarly, User can use Grammarly to make text more persuasive, user can use writing suggestions to add a deadline to a Slack message being sent</span>
+            </div>
         </div>
     </div>
+</section>
 
-    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Section 3 stat >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+<script>
+    // Add functionality to pause/play the video
+    document.addEventListener('DOMContentLoaded', function() {
+        const video = document.getElementById('hero-video');
+        const pauseButton = document.querySelector('[aria-label="Pause animation"]');
+        
+        pauseButton.addEventListener('click', function() {
+            if (video.paused) {
+                video.play();
+                pauseButton.innerHTML = `
+                    <div class="h-8 w-8 rounded-full border-2 border-gray-600 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pause h-4 w-4 text-gray-600">
+                            <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+                            <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                        </svg>
+                    </div>
+                `;
+                pauseButton.setAttribute('aria-label', 'Pause animation');
+            } else {
+                video.pause();
+                pauseButton.innerHTML = `
+                    <div class="h-8 w-8 rounded-full border-2 border-gray-600 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play h-4 w-4 text-gray-600">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                    </div>
+                `;
+                pauseButton.setAttribute('aria-label', 'Play animation');
+            }
+        });
+    });
+</script>
 
-    <div class="container-fluid">
-        <div class="container pt-5  mb-5" style="border-top: 1px #00000026 solid;">
-            <div class="row">
-            <div class="col-3">
-                <h2  style="border-left:4px rgba(72, 71, 71, 0.138) solid ; padding-left: 20px;"><b>02 </b><span class="fw-bold fs-5">Years</span></h2>
-                <h6  style=" padding-left: 24px;">Proven Track Record</h6>
-            </div>
-
-            <div class="col-3"> 
-                <h2  style="border-left:4px rgba(72, 71, 71, 0.138) solid ; padding-left: 20px;"><b>02 </b><span class="fw-bold fs-5">Years</span></h2>
-                <h6  style=" padding-left: 24px;">Proven Track Record</h6>
-            </div>
-
-            <div class="col-3"> <h2  style="border-left:4px rgba(72, 71, 71, 0.138) solid ; padding-left: 20px;"><b>02 </b><span class="fw-bold fs-5">Years</span></h2>
-                <h6  style=" padding-left: 24px;">Proven Track Record</h6></div>
-            <div class="col-3"> <h2  style="border-left:4px rgba(72, 71, 71, 0.138) solid ; padding-left: 20px;"><b>02 </b><span class="fw-bold fs-5">Years</span></h2>
-                <h6  style=" padding-left: 24px;">Proven Track Record</h6></div>
-
-            </div>
-        </div>
-    </div>
+<script>
+    // Configure Tailwind with primary color
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    primary: '#15C39A',
+                }
+            }
+        }
+    }
+</script>
 
 
- <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Section 4 sDiscover story >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+     <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  section 2 Trusted logio >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
      
-        <div class="container-fluid mb-">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 rouded">
-                           <h1 class=" fw-bold fs-1">Discover Our Story​</h1>
-                            <h6 class="lh-base fs-5">Xact Mind is a UK based leading Software and AI development company, providing comprehensive AI solutions tailored to meet the evolving needs of customers & businesses. We take pride in crafting intelligent systems that propel businesses to new heights. Our commitment is to pave the exact path to intelligent solutions, ensuring precision and innovation in every project.</h6>
-                            
-                         <ul class="list-unstyled mt-3">
-                                <li> <img src="./Template/dot.png" alt="" width="20px"> <span class="lh-base fs-5 px-2 "> Industry Specific Expertise</span> </li>
-                                <li> <img src="./Template/dot.png" alt="" width="20px"> <span class="lh-base fs-5 px-2"> Industry Specific Expertise</span> </li>
-                        </ul> 
-                        <button type="button" class="btn btn-primary   mt-sm-2 mt-1  " style="padding: 10px 20px;">About us</button>
 
+     <section class="py-6 px-4 md:px-6 lg:px-8 bg-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h2 class="text-xl md:text-2xl text-gray-700 font-normal">
+          Trusted by 50,000 organizations and 40 million people
+        </h2>
+      </div>
+
+      <!-- Logo Scroller Container - Left Aligned -->
+      <div class="relative ml-0">
+        <!-- First Row -->
+        <div class="relative overflow-hidden mb-8">
+          <!-- Left Gradient Fade -->
+          <div class="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
+          
+          <!-- Right Gradient Fade -->
+          <div class="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
+          
+          <!-- Scrolling Container -->
+          <div class="flex overflow-hidden">
+            <div id="firstRow" class="flex animate-marquee">
+              <!-- First set of logos -->
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/ew5WGXQVNQcO0nSN47lC1/1f470b2ef58daa8bcd5b81dcaeffdd2f/Brand_Zoom__Type_Corporations__Mode_Light.svg" alt="Zoom" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/4IRfy3tscY70lcCKbYKgLi/8711eb4052e0d904be73c21cff8d97b5/Brand_Expedia__Type_Corporations__Mode_Light__1_.svg" alt="Expedia" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/4WUOpJleQHBPlOCvXFHD7H/2107d4495a40cea61f5b837f07953db7/Brand_Databricks__Type_Corporations__Mode_Light.svg" alt="Databricks" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/69zYhPmc91hoHizA4Dm4qR/6dea4ff0807974f168c0d917b351e7e2/LogoClients.svg" alt="Atlassian" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/2ZLIHLDow6103GH2mfjbGT/16016623215b548ffd12a6460b44b4ed/LogoClients.svg" alt="Align" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/6AHqa3gg1nBYCNU6iFL6PJ/208310ebe076483a5e0512d7a64d8bff/LogoClients.svg" alt="Washington University in St. Louis" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/1UNl8r42VO7mSL8qW9UpcC/3eecb2eec46b189c9667ab1b1f97712e/Brand_Ca.GOV__Type_Corporations__Mode_Light.svg" alt="CA.gov" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/4OwS89RDtmjP59rdrWqQkd/90d6b4efe0ade6813260fa4c3a8f0a41/Brand_Everlane__Type_Corporations__Mode_Light.svg" alt="Everlane" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/4dfomalLEPE0ZbMUcDDeSY/621c1b2e549763c87f46eb8d58601018/Brand_Blackrock__Type_Corporations__Mode_Light.svg" alt="BlackRock" class="h-18 object-contain">
+              </div>
+              
+              <!-- Duplicate logos for seamless loop -->
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/ew5WGXQVNQcO0nSN47lC1/1f470b2ef58daa8bcd5b81dcaeffdd2f/Brand_Zoom__Type_Corporations__Mode_Light.svg" alt="Zoom" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/4IRfy3tscY70lcCKbYKgLi/8711eb4052e0d904be73c21cff8d97b5/Brand_Expedia__Type_Corporations__Mode_Light__1_.svg" alt="Expedia" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/4WUOpJleQHBPlOCvXFHD7H/2107d4495a40cea61f5b837f07953db7/Brand_Databricks__Type_Corporations__Mode_Light.svg" alt="Databricks" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/69zYhPmc91hoHizA4Dm4qR/6dea4ff0807974f168c0d917b351e7e2/LogoClients.svg" alt="Atlassian" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/2ZLIHLDow6103GH2mfjbGT/16016623215b548ffd12a6460b44b4ed/LogoClients.svg" alt="Align" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/6AHqa3gg1nBYCNU6iFL6PJ/208310ebe076483a5e0512d7a64d8bff/LogoClients.svg" alt="Washington University in St. Louis" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/1UNl8r42VO7mSL8qW9UpcC/3eecb2eec46b189c9667ab1b1f97712e/Brand_Ca.GOV__Type_Corporations__Mode_Light.svg" alt="CA.gov" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/4OwS89RDtmjP59rdrWqQkd/90d6b4efe0ade6813260fa4c3a8f0a41/Brand_Everlane__Type_Corporations__Mode_Light.svg" alt="Everlane" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/4dfomalLEPE0ZbMUcDDeSY/621c1b2e549763c87f46eb8d58601018/Brand_Blackrock__Type_Corporations__Mode_Light.svg" alt="BlackRock" class="h-18 object-contain">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second Row - Now using the same animation direction -->
+        <div class="relative overflow-hidden mb-12">
+          <!-- Left Gradient Fade -->
+          <div class="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
+          
+          <!-- Right Gradient Fade -->
+          <div class="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
+          
+          <!-- Scrolling Container -->
+          <div class="flex overflow-hidden">
+            <div id="secondRow" class="flex animate-marquee">
+              <!-- First set of logos -->
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/6O5oCnOEsIMb6zNgc9aGau/8982de2a314a5355e2b131c1da74a852/Brand_Upwork__Type_Corporations__Mode_Light.svg" alt="Upwork" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/14tCCBBoG3PEA9eoNxM7iM/e3fc5cefb6962891335356c510206d09/Brand_Iowa_State__Type_Academic_Institutions__Mode_Light.svg" alt="Iowa State University" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/62AbvoreGZUSexVcSED4hF/01d2d9a168f2a69b762f10305ef0f894/Brand_Zapier__Type_Corporations__Mode_Light__1_.svg" alt="Zapier" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/6GL5X9Y4dLnorw0YMwDR8d/c989b42b58d06ae8ffedda6d7a6cc85e/Brand_Upenn__Type_Academic_Institutions__Mode_Light.svg" alt="University of Pennsylvania" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/QeKIVjZ6MApIISC8aykf7/067f89d61bf69db95a6c518035f826d2/ASU.svg" alt="Arizona State University" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/IIuV4Y07WxIddn16cp0mf/9f21ae391d01b758aae092f443186022/Brand_Expensify__Type_Corporations__Mode_Light__1_.svg" alt="Expensify" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/4TC0j9SdpZEm63Fd1UUGK8/802580c28b79bf2358976403d20f1e39/Brand_HackerOne__Type_Corporations__Mode_Light.svg" alt="Hacker One" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/4b8nwIX0ORWfaVktIN831/1641a33c9c9097f6767b5641d51256c2/Brand_AffinityX__Type_Corporations__Mode_Light.svg" alt="AffintyX" class="h-18 object-contain">
+              </div>
+              
+              <!-- Duplicate logos for seamless loop -->
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/6O5oCnOEsIMb6zNgc9aGau/8982de2a314a5355e2b131c1da74a852/Brand_Upwork__Type_Corporations__Mode_Light.svg" alt="Upwork" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/14tCCBBoG3PEA9eoNxM7iM/e3fc5cefb6962891335356c510206d09/Brand_Iowa_State__Type_Academic_Institutions__Mode_Light.svg" alt="Iowa State University" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/62AbvoreGZUSexVcSED4hF/01d2d9a168f2a69b762f10305ef0f894/Brand_Zapier__Type_Corporations__Mode_Light__1_.svg" alt="Zapier" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/6GL5X9Y4dLnorw0YMwDR8d/c989b42b58d06ae8ffedda6d7a6cc85e/Brand_Upenn__Type_Academic_Institutions__Mode_Light.svg" alt="University of Pennsylvania" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/QeKIVjZ6MApIISC8aykf7/067f89d61bf69db95a6c518035f826d2/ASU.svg" alt="Arizona State University" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/IIuV4Y07WxIddn16cp0mf/9f21ae391d01b758aae092f443186022/Brand_Expensify__Type_Corporations__Mode_Light__1_.svg" alt="Expensify" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/4TC0j9SdpZEm63Fd1UUGK8/802580c28b79bf2358976403d20f1e39/Brand_HackerOne__Type_Corporations__Mode_Light.svg" alt="Hacker One" class="h-18 object-contain">
+              </div>
+              <div class="flex-shrink-0 mx-3 w-[130px]">
+                <img src="https://static-web.grammarly.com/1e6ajr2k4140/4b8nwIX0ORWfaVktIN831/1641a33c9c9097f6767b5641d51256c2/Brand_AffinityX__Type_Corporations__Mode_Light.svg" alt="AffintyX" class="h-18 object-contain">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pause/Play Button - Now positioned below the logos -->
+        <div class="flex justify-left mt-1">
+          <button 
+            id="toggleButton"
+            class="bg-white rounded-full p-0 border-none focus:outline-none"
+            aria-label="Pause"
+          >
+            <div class="h-8 w-8 rounded-full border-2 border-gray-500 flex items-center justify-center">
+              <div id="pauseIcon" class="flex">
+                <div class="w-1 h-4 bg-gray-500 rounded-sm mx-0.5"></div>
+                <div class="w-1 h-4 bg-gray-500 rounded-sm mx-0.5"></div>
+              </div>
+              <svg id="playIcon" class="h-4 w-4 text-gray-500 hidden" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 4v16l14-8-14-8z" fill="currentColor" />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Get references to DOM elements
+    const firstRow = document.getElementById('firstRow');
+    const secondRow = document.getElementById('secondRow');
+    const toggleButton = document.getElementById('toggleButton');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const playIcon = document.getElementById('playIcon');
+    
+    let isPaused = false;
+    
+    // Toggle pause/play function
+    function togglePause() {
+      isPaused = !isPaused;
+      
+      if (isPaused) {
+        // Add the paused class to stop the animation
+        firstRow.classList.add('paused');
+        secondRow.classList.add('paused');
+        pauseIcon.classList.add('hidden');
+        playIcon.classList.remove('hidden');
+        toggleButton.setAttribute('aria-label', 'Play');
+      } else {
+        // Remove the paused class to resume the animation
+        firstRow.classList.remove('paused');
+        secondRow.classList.remove('paused');
+        pauseIcon.classList.remove('hidden');
+        playIcon.classList.add('hidden');
+        toggleButton.setAttribute('aria-label', 'Pause');
+      }
+    }
+    
+    // Add click event listener to the button
+    toggleButton.addEventListener('click', togglePause);
+  </script>
+
+     <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> section 3 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+
+     <div class="w-full max-w-[1280px] mx-auto px-4 md:px-8">
+      <!-- Features Section Container -->
+      <div class="py-12 md:py-16 flex flex-col-reverse md:flex-row">
+        
+        <!-- Left Column - Text Content -->
+        <div class="w-full md:w-1/2 pr-0 md:pr-8">
+          <!-- Feature 1: Better writing, better results -->
+          <div id="feature-1" class="feature-section" data-video="video-1">
+            <h2 class="text-5xl md:text-5xl font-bold text-gray-800 leading-tight mb-10">
+              Better writing,<br>better results
+            </h2>
+            <p class="text-lg text-gray-600">
+              Be perfectly professional, clear, and convincing in a few clicks, not a few hours.
+            </p>
+          </div>
+          
+          <!-- Feature 2: The right text for the context -->
+          <div id="feature-2" class="feature-section" data-video="video-2">
+            <h2 class="text-5xl md:text-5xl font-semibold text-gray-800 leading-tight mb-10">
+              The right text<br>for the context
+            </h2>
+            <p class="text-lg text-gray-600">
+              Get personalized suggestions based on what you're writing and who will read it.
+            </p>
+          </div>
+          
+          <!-- Feature 3: Works where you work -->
+          <div id="feature-3" class="feature-section" data-video="video-3">
+            <h2 class="text-5xl md:text-5xl font-semibold  text-gray-800 leading-tight mb-10">
+              Works where<br>you work
+            </h2>
+            <p class="text-lg text-gray-600">
+              Grammarly works across all the apps and sites you use. No copying, no pasting, no context switching.
+            </p>
+          </div>
+          
+          <!-- Feature 4: Never go out of style -->
+          <div id="feature-4" class="feature-section" data-video="video-4">
+            <h2 class="text-5xl md:text-5xl font-semibold  text-gray-800 leading-tight mb-10">
+              Never go out of style
+            </h2>
+            <p class="text-lg text-gray-600">
+              Grammarly understands both your personal style and your brand style guide to help you find your voice.
+            </p>
+          </div>
+          
+          <!-- Feature 5: This is responsible AI -->
+          <div id="feature-5" class="feature-section" data-video="video-5">
+            <h2 class="text-5xl md:text-5xl font-semibold  text-gray-800 leading-tight mb-10">
+              This is responsible AI
+            </h2>
+            <p class="text-lg text-gray-600 mb-6">
+              Don't compromise on security. We never sell your data, provide it for advertising purposes, or allow third parties to use it to train their models.
+            </p>
+            <a href="https://www.grammarly.com/trust" class="arrow-link inline-flex items-center">
+              Learn More
+              <svg width="11" height="10" viewBox="0 0 11 10" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="ml-1">
+                <path d="M5.056 1.748L6.144 0.691999L10.304 4.836V4.948L6.144 9.108L5.056 8.036L7.44 5.652H0.304V4.132H7.424L5.056 1.748Z"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Right Column - Videos -->
+        <div class="w-full md:w-1/2 md:pl-8">
+          <div class="videos-column">
+            <div class="videos-wrapper">
+              <!-- Video 1 -->
+              <div id="video-1" class="video-container active">
+                <video 
+                  class="w-full h-full object-cover"
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  poster="https://static-web.grammarly.com/1e6ajr2k4140/2vV6Yz9zTBFXZ0rztDuwzK/22ce1e2992cbbb2665a204339481cb44/parallax-slide-1.png"
+                >
+                  <source 
+                    src="https://static-web.grammarly.com/1e6ajr2k4140/3od5HhZSZa0jEhX1y6cVCW/9c07858c4bef8eb476cb762291bb699b/071824_Section_1_Animation_2x.mp4" 
+                    type="video/mp4"
+                  >
+                  Sorry, your browser doesn't support embedded videos
+                </video>
+                <span class="sr-only">
+                  An animation of Grammarly's product shows an example of rephrased text where typos from the original text are fixed, and the sentence is made more concise.
+                </span>
+              </div>
+              
+              <!-- Video 2 -->
+              <div id="video-2" class="video-container">
+                <video 
+                  class="w-full h-full object-cover"
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  poster="https://static-web.grammarly.com/1e6ajr2k4140/jgIqvOdDFTGwBHYjHD10J/c837070d05fbde41e650f9222fc44543/parallax-slide-2.png"
+                >
+                  <source 
+                    src="https://static-web.grammarly.com/1e6ajr2k4140/4ihkDQN1xhAKtlUwBIBx27/09f0856f589ac7a59871197bb0670c56/072224_UpdatedSection2_Stroke_2px.mp4" 
+                    type="video/mp4"
+                  >
+                  Sorry, your browser doesn't support embedded videos
+                </video>
+                <span class="sr-only">
+                  An animation of Grammarly's product shows an example of Grammarly amending email text in order to strengthen the call to action for business customers.
+                </span>
+              </div>
+              
+              <!-- Video 3 -->
+              <div id="video-3" class="video-container">
+                <video 
+                  class="w-full h-full object-cover"
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  poster="https://static-web.grammarly.com/1e6ajr2k4140/2piKAof8UlxD7OY70joWli/75e4884c0099c22f86237b665b10a566/parallax-slide-3.png"
+                >
+                  <source 
+                    src="https://static-web.grammarly.com/1e6ajr2k4140/2dEUeFYc3sHGsqhfXNHsXz/ff1b37adc2e9c8a5526e9c993cdffe42/071824_Section_3_Animation_2x.mp4" 
+                    type="video/mp4"
+                  >
+                  Sorry, your browser doesn't support embedded videos
+                </video>
+                <span class="sr-only">
+                  An animation shows 10 logos of products where Grammarly works, with a cursor clicking on Slack, Outlook, and Notion, and a text box displaying relevant Grammarly prompts for each application.
+                </span>
+              </div>
+              
+              <!-- Video 4 -->
+              <div id="video-4" class="video-container">
+                <video 
+                  class="w-full h-full object-cover"
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  poster="https://static-web.grammarly.com/1e6ajr2k4140/7Hz8pL4dH8olUY1jGwBWSa/84052d70997bad838add3077b85cf535/parallax-slide-4.png"
+                >
+                  <source 
+                    src="https://static-web.grammarly.com/1e6ajr2k4140/4JFqSLq1U3f6TTcWXvrw4y/1b5800ee28a52f7dd60fa52b306850a3/071824_Section_4_Animation_2x.mp4" 
+                    type="video/mp4"
+                  >
+                  Sorry, your browser doesn't support embedded videos
+                </video>
+                <span class="sr-only">
+                  An animation shows Grammarly within a Zendesk text box providing suggestions to follow the brand style guide, and achieve a more confident tone.
+                </span>
+              </div>
+              
+              <!-- Video 5 -->
+              <div id="video-5" class="video-container">
+                <video 
+                  class="w-full h-full object-cover"
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  poster="https://static-web.grammarly.com/1e6ajr2k4140/6eck5Kr7gDyJifV5aNqEac/824742f305babdc38f47605b2311ff1f/parallax-slide-5.png"
+                >
+                  <source 
+                    src="https://static-web.grammarly.com/1e6ajr2k4140/7c13DyJBGV1MQtBfmSeDrG/602d332b5b40a39fbf20ae86a5a5fdf0/031824_Section_5_Animation_2x.mp4" 
+                    type="video/mp4"
+                  >
+                  Sorry, your browser doesn't support embedded videos
+                </video>
+                <span class="sr-only">
+                  An animation showing Grammarly's logo at the center of nine rotating bubbles containing graphics representing Grammarly's various security accreditations.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const featureSections = document.querySelectorAll('.feature-section');
+        const videoContainers = document.querySelectorAll('.video-container');
+        const videos = document.querySelectorAll('video');
+        
+        // Play all videos on load
+        videos.forEach(video => {
+          video.play();
+        });
+        
+        // Function to check if an element is in viewport
+        function isInViewport(element) {
+          const rect = element.getBoundingClientRect();
+          const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+          
+          // Consider an element in view when it's in the middle of the viewport
+          return (
+            rect.top <= windowHeight / 2 &&
+            rect.bottom >= windowHeight / 2
+          );
+        }
+        
+        // Function to update active video based on scroll position
+        function updateActiveVideo() {
+          let activeFeature = null;
+          
+          // Find which feature section is currently in view
+          featureSections.forEach(section => {
+            if (isInViewport(section)) {
+              activeFeature = section;
+            }
+          });
+          
+          // If a feature section is in view, update the active video
+          if (activeFeature) {
+            const videoId = activeFeature.getAttribute('data-video');
+            
+            // Hide all videos
+            videoContainers.forEach(container => {
+              container.classList.remove('active');
+            });
+            
+            // Show the active video
+            const activeVideo = document.getElementById(videoId);
+            if (activeVideo) {
+              activeVideo.classList.add('active');
+              
+              // Ensure the video is playing
+              const videoElement = activeVideo.querySelector('video');
+              if (videoElement && videoElement.paused) {
+                videoElement.play();
+              }
+            }
+          }
+        }
+        
+        // Update active video on scroll
+        window.addEventListener('scroll', updateActiveVideo);
+        
+        // Initial update
+        updateActiveVideo();
+      });
+    </script>
+
+    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> section 4 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+  
+  
+        <div class="py-16 px-4 md:px-6 lg:px-8 bg-white">
+            <div class="max-w-7xl mx-auto space-y-16">
+                <!-- First Section -->
+                <div class="space-y-10">
+                    <div class="text-center">
+                        <h2 class="text-3xl font-semibold">Choose the Right <br>Grammarly Plan</h2>
+                        <div class="h-10"></div>
                     </div>
-
-
-                    <div class="col-md-6 py-5" >
-                         
-                        <video src="./Template/xactmind-home-video.mp4"   style="border-radius: 30px;" width="100%  " height="70%%" autoplay="" controls="autoplay" class="img-fluid img" loop=""></video>
+                    <div class="flex items-center justify-center space-x-4">
+                        <span class="text-lg">Monthly</span>
+                        <div class="relative">
+                            <input type="checkbox" id="toggle" class="sr-only">
+                            <label for="toggle" class="block w-12 h-6 bg-gray-300 rounded-full cursor-pointer"></label>
                         </div>
+                        <span class="text-lg">Yearly</span>
+                        <label class="text-sm text-green-600">Save up to 60%</label>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Free Plan -->
+                        <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                            <div class="text-sm text-gray-500">For individuals</div>
+                            <h2 class="text-2xl font-semibold">Free</h2>
+                            <p class="text-gray-600">Get peace of mind with writing that’s mistake-free.</p>
+                            <h3 class="text-3xl font-bold mt-4">$0 <span class="text-sm font-semibold">USD</span></h3>
+                            <span class="text-sm text-gray-500">/ month</span>
+                            <button class="bg-green-500 text-white py-2 px-4 mt-4 rounded-md hover:bg-green-600">Create Account</button>
+                        </div>
+                        <!-- Pro Plan -->
+                        <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                            <div class="text-sm text-green-600">Most popular</div>
+                            <h2 class="text-2xl font-semibold">Pro</h2>
+                            <p class="text-gray-600">Deliver impactful writing, whether working alone or as a team.</p>
+                            <h3 class="text-3xl font-bold mt-4">$12 <span class="text-sm font-semibold">USD</span></h3>
+                            <span class="text-sm text-gray-500">/ member / month, billed annually</span>
+                            <button class="bg-green-500 text-white py-2 px-4 mt-4 rounded-md hover:bg-green-600">Get Started</button>
+                        </div>
+                        <!-- Enterprise Plan -->
+                        <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                            <div class="text-sm text-gray-500">For larger organizations</div>
+                            <h2 class="text-2xl font-semibold">Enterprise</h2>
+                            <p class="text-gray-600">Drive results across your entire organization with trusted AI.</p>
+                            <button class="bg-green-500 text-white py-2 px-4 mt-4 rounded-md hover:bg-green-600">Contact Sales</button>
+                        </div>
+                    </div>
                 </div>
-
-
+              
+                
             </div>
         </div>
     
- <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Section 5 Services >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-
-
-            <div class="container-fluid  pt-5" style="background-image: linear-gradient(180deg, #AFC6E6 0%, #E9E6EF 100%);">
-                <div class="container">
-                    <span class="bg-light p-2" style="font-size: 10px;">WHAT WE OFFER</span>
-
-                    <h1 class=" fw-bolder mb-3 fs-1 mt-3">Our Services ​</h1>
-
-                    <div class="row  row-md-3 gap-4">
-
-                        <div class="col-md bg-light   " >
-                            <div class="row ">
-                                <div class="col col-md-12 p-4  " style="border-bottom: 1px #00000026 solid; ">
-                                        <img class="mb-3" src="./Template/icon1.png" alt="" width="70px" height="70" > 
-                                        <a  href="" class="text-decoration-none"><h3 class="mb-3">AI Development Services</h3></a>
-                                        <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                </div>
-                                <div class="col-12 px-4 py-2"><span style="border-bottom: rgba(72, 71, 71, 0.316) solid ; color: rgb(78, 78, 251); ">learn more</span></div>
-                            </div>  
-                        </div>
-
-
-                        <div class="col-md bg-light   ">
-                            <div class="row ">
-                                <div class="col col-md-12 p-4  " style="border-bottom: 1px #00000026 solid; ">
-                                        <img class="mb-3" src="./Template/icon2.png" alt="" width="70px" height="70" > 
-                                        <a  href="" class="text-decoration-none"><h3 class="mb-3">AI Development Services</h3></a>
-                                        <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                </div>
-                                <div class="col-12 px-4 py-2"><span style="border-bottom: rgba(72, 71, 71, 0.316) solid ; color: rgb(78, 78, 251); ">learn more</span></div>
-                            </div>  
-                        </div>
-
-                        <div class="col-md bg-light   ">
-                            <div class="row ">
-                                <div class="col col-md-12 p-4  " style="border-bottom: 1px #00000026 solid; ">
-                                        <img class="mb-3" src="./Template/icon3.png" alt="" width="70px" height="70" > 
-                                        <a  href="" class="text-decoration-none"><h3 class="mb-3">AI Development Services</h3></a>
-                                        <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                </div>
-                                <div class="col-12 px-4 py-2"><span style="border-bottom: rgba(72, 71, 71, 0.316) solid ; color: rgb(78, 78, 251); ">learn more</span></div>
-                            </div>  
-                        </div>
-                    </div>
-
-                     <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-
-                     
-                    <div class="row gap-4 my-4">
-
-                        <div class="col-md bg-light   " >
-                            <div class="row ">
-                                <div class="col col-md-12 p-4  " style="border-bottom: 1px #00000026 solid; ">
-                                        <img class="mb-3" src="./Template/icon4.png" alt="" width="70px" height="70" > 
-                                        <a  href="" class="text-decoration-none"><h3 class="mb-3">AI Development Services</h3></a>
-                                        <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                </div>
-                                <div class="col-12 px-4 py-2"><span style="border-bottom: rgba(72, 71, 71, 0.316) solid ; color: rgb(78, 78, 251); ">learn more</span></div>
-                            </div>  
-                        </div>
-
-
-                        <div class="col-md bg-light   ">
-                            <div class="row ">
-                                <div class="col col-md-12 p-4  " style="border-bottom: 1px #00000026 solid; ">
-                                        <img class="mb-3" src="./Template/icon5.png" alt="" width="70px" height="70" > 
-                                        <a  href="" class="text-decoration-none"><h3 class="mb-3">AI Development Services</h3></a>
-                                        <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                </div>
-                                <div class="col-12 px-4 py-2"><span style="border-bottom: rgba(72, 71, 71, 0.316) solid ; color: rgb(78, 78, 251); ">learn more</span></div>
-                            </div>  
-                        </div>
-
-                        <div class="col-md bg-light   ">
-                            <div class="row ">
-                                <div class="col col-md-12 p-4  " style="border-bottom: 1px #00000026 solid; ">
-                                        <img class="mb-3" src="./Template/icon6.png" alt="" width="70px" height="70" > 
-                                        <a  href="" class="text-decoration-none"><h3 class="mb-3">AI Development Services</h3></a>
-                                        <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                </div>
-                     <div class="col-12 px-4 py-2"><span style="border-bottom: rgba(72, 71, 71, 0.316) solid ; color: rgb(78, 78, 251); ">learn more</span></div>
-                            </div>  
-                        </div>
-                    </div>
-
-                          <div class=" d-flex justify-content-center py-4 ">
-                            <button type="button" class="btn btn dark  btn-primary   " style="padding: 10px 20px;"   >View All Services</button>
-                          </div>  
-                </div>
-                       
-            </div>
-
-
-            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Sectioion 6 Our ClientS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-
-
-
-                <div class="container-fluid ">
-                    <div class="container">
-                        <div class="row  ">
-                            
-                            <p class=" p-2 d-flex mx-auto mt-3 " style="font-size: 10px; width: 113px; border-radius: 5px; background-color: #5f65671d;" >OUR VISIONARIES</p>
-                            
-
-                            <h1 class=" fw-bolder mb-3 fs-1 mt-3 " style="text-align: center; " >  Executive Management ​</h1>
-                        
-                            
-                            <div class="col-md   m-2" style="border-bottom: 1px #00000026 solid; ">
-                                <div class="card  border-0 ">
-                                    <img src="./Template/ceo.jpg" alt="" class="card-img-top" height="350px">
-                                    <div class="card-body ">
-                                        <h2 class="card-title">Waqas Ahmed</h2>
-                                        <p class="card-text">Founder & CEO</p>
-                                        <a href="" class="text-decoration-none " data-toggle="collapse" data-target="#ceo"> <img src="./icon.png" alt="" width="20px"> <span class=" p-2 "> View More</span> </a>
-                                        <div class="collapse" id="ceo">
-                                            <p>
-                                                Waqas Ahmed is the Founder and CEO of Xact Mind, an artificial intelligence development and solutions company. Under his leadership, Xact Mind specializes in harnessing the power of AI to provide innovative and tailored solutions for a variety of industries.
-                                                <p>
-                                                With a focus on cutting-edge technology and a commitment to pushing the boundaries of what AI can achieve, Xact Mind stands as a forward-thinking company at the forefront of the rapidly evolving field of artificial intelligence</p>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md   m-2" style="border-bottom: 1px #00000026 solid; ">
-                                <div class="card border-0" >
-                                    <img src="./Template/dir.png" alt="" class="card-img-top" height="350px">
-                                    <div class="card-body">
-                                        <h2 class="card-title">Waqas Ahmed</h2>
-                                        <p class="card-text">Founder & CEO</p>
-                                        <a href="" class="text-decoration-none " data-toggle="collapse" data-target="#ceo"> <img src="./icon.png" alt="" width="20px"> <span class=" p-2 "> View More</span> </a>
-                                        <div class="collapse" id="ceo">
-                                            <p>
-                                                Waqas Ahmed is the Founder and CEO of Xact Mind, an artificial intelligence development and solutions company. Under his leadership, Xact Mind specializes in harnessing the power of AI to provide innovative and tailored solutions for a variety of industries.
-                                                <p>
-                                                With a focus on cutting-edge technology and a commitment to pushing the boundaries of what AI can achieve, Xact Mind stands as a forward-thinking company at the forefront of the rapidly evolving field of artificial intelligence</p>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md   m-2" style="border-bottom: 1px #00000026 solid; ">
-                                <div class="card border-0">
-                                    <img src="./Template/cto.jpg" alt="" class="card-img-top" height="350px">
-                                    <div class="card-body">
-                                        <h2 class="card-title">Waqas Ahmed</h2>
-                                        <p class="card-text">Founder & CEO</p>
-                                        <a href="" class="text-decoration-none " data-toggle="collapse" data-target="#ceo"> <img src="./icon.png" alt="" width="20px"> <span class=" p-2 "> View More</span> </a>
-                                        <div class="collapse" id="ceo">
-                                            <p>
-                                                Waqas Ahmed is the Founder and CEO of Xact Mind, an artificial intelligence development and solutions company. Under his leadership, Xact Mind specializes in harnessing the power of AI to provide innovative and tailored solutions for a variety of industries.
-                                                <p>
-                                                With a focus on cutting-edge technology and a commitment to pushing the boundaries of what AI can achieve, Xact Mind stands as a forward-thinking company at the forefront of the rapidly evolving field of artificial intelligence</p>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md   m-2" style="border-bottom: 1px #00000026 solid; ">
-                                <div class="card border-0">
-                                    <img src="./Template/bs.jpg" alt="" class="card-img-top" height="350px">
-                                    <div class="card-body">
-                                        <h2 class="card-title">Waqas Ahmed</h2>
-                                        <p class="card-text">Founder & CEO</p>
-                                        <a href="" class="text-decoration-none " data-toggle="collapse" data-target="#ceo"> <img src="./icon.png" alt="" width="20px"> <span class=" p-2 "> View More</span> </a>
-                                        <div class="collapse" id="ceo">
-                                            <p>
-                                                Waqas Ahmed is the Founder and CEO of Xact Mind, an artificial intelligence development and solutions company. Under his leadership, Xact Mind specializes in harnessing the power of AI to provide innovative and tailored solutions for a variety of industries.
-                                                <p>
-                                                With a focus on cutting-edge technology and a commitment to pushing the boundaries of what AI can achieve, Xact Mind stands as a forward-thinking company at the forefront of the rapidly evolving field of artificial intelligence</p>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <div class=" d-flex justify-content-center py-4 ">
-                        <button type="button" class="btn btn dark  btn-primary   " style="padding: 10px 20px;"   >View All Services</button>
-                      </div> 
-                    </div>
-                     
-                </div>
-
-<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Section 7 Portfolio Section>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-
-
-
-                
-<div class="container-fluid ">
-    <div class="container ">
-
-        <p class=" p-2  mt-4 " style="font-size: 10px; width: 113px; border-radius: 5px; background-color: #5f65671d;" >OUR VISIONARIES</p>
-        <h1 class=" fw-bolder mb-3 fs-1 mt-3 "   >  Portfolio Projects ​</h1>
-        
-        <div class="row gap-4  p-3 ">
-
-            <div class="col-lg p-3 " style="border-radius: 10px; border: 1px rgba(0, 0, 0, 0.284) solid;">
-                <div class="card border-0 ">
-                    <img src="./Template/dental-clinic-chatbot-xactmind.jpg" alt=""  height="230px " style="border-radius: 10px;">
-                   
-                    <div class="card-body ">
-                    <p class="card-subtitle " >
-                        <a href="" class="text-decoration-none" style="font-size: 14px; color: rgba(176, 176, 176, 0.892);">Web Development,</a>
-                        <a class="text-decoration-none " href="" style="font-size: 14px; color: rgba(176, 176, 176, 0.882);">Chatbots & Generative AI</a> 
-                     </p>
-                        <h5 class="card-title fw-bold my-3">Dental Clinic Consultation and Appointment Booking Chatbot Assistant</h5>
-                        <p class="card-text">Elevate your dental clinic experience with our Smart Sales Assistant Chatbot powered by OpenAI.      Seamlessly handle consultation inquiries and appointment bookings, providing patients with convenient and efficient service.
-                    </p>
-                        <a href="" class="text-decoration-none " style="font-size: 14px; color: black;"> Learn more </a> 
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg p-3 " style="border-radius: 10px; border: 1px rgba(0, 0, 0, 0.284) solid;">
-                <div class="card border-0 ">
-                    <img src="./Template/admission-recommendation-system-xactmind.jpg" alt=""  height="230px " width="100%" style="border-radius: 10px;">
-                   
-                    <div class="card-body ">
-                    <p class="card-subtitle " >
-                        <a href="" class="text-decoration-none" style="font-size: 14px; color: rgba(176, 176, 176, 0.892);">Web Development,</a>
-                        <a class="text-decoration-none " href="" style="font-size: 14px; color: rgba(176, 176, 176, 0.882);">Chatbots & Generative AI</a> 
-                     </p>
-                        <h5 class="card-title fw-bold my-3">Dental Clinic Consultation and Appointment Booking Chatbot Assistant</h5>
-                        <p class="card-text">Elevate your dental clinic experience with our Smart Sales Assistant Chatbot powered by OpenAI.      Seamlessly handle consultation inquiries and appointment bookings, providing patients with convenient and efficient service.
-                    </p>
-                        <a href="" class="text-decoration-none " style="font-size: 14px; color: black;"> Learn more </a> 
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg p-3 " style="border-radius: 10px; border: 1px rgba(0, 0, 0, 0.284) solid;">
-                <div class="card border-0 ">
-                    <img src="./Template/attendance-management-system-xactmind.jpg" alt=""  height="230px " style="border-radius: 10px;">
-                   
-                    <div class="card-body ">
-                    <p class="card-subtitle " >
-                        <a href="" class="text-decoration-none" style="font-size: 14px; color: rgba(176, 176, 176, 0.892);">Web Development,</a>
-                        <a class="text-decoration-none " href="" style="font-size: 14px; color: rgba(176, 176, 176, 0.882);">Chatbots & Generative AI</a> 
-                     </p>
-                        <h5 class="card-title fw-bold my-3">Dental Clinic Consultation and Appointment Booking Chatbot Assistant</h5>
-                        <p class="card-text">Elevate your dental clinic experience with our Smart Sales Assistant Chatbot powered by OpenAI.      Seamlessly handle consultation inquiries and appointment bookings, providing patients with convenient and efficient service.
-                    </p>
-                        <a href="" class="text-decoration-none " style="font-size: 14px; color: black;"> Learn more </a> 
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class=" d-flex justify-content-center py-4 ">
-            <button type="button" class="btn btn dark  btn-primary   " style="padding: 10px 20px;"   >View All Services</button>
-          </div> 
-    </div>
-</div>
-
-
-            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>section 8 Testiomanial >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-
-            <div class="container mb-3">
-                <h1 class=" fw-bolder mb-3 fs-1 mt-3 " style="text-align: center; " > Testimonials about Our Services​ ​</h1>
-
-            <div class=" carousel  slide" data-ride="carousel" id="ma">
-                <div class="  carousel-inner">
-                    <div class="row">
-                    <div class="col-4 carousel-item active">
-
-                        <div>
-                            <div class="row  row-md-3 gap-4">
-
-                                <div class="col-md bg-light   " >
-                                    <div class="row  card">
-                                        <div class="col col-md-12 p-4 ">
-                                                <img class="mb-3" src="./Template/2.webp" alt="" width="70px" height="70" style="border-radius: 50px;"> 
-                                                <h2 class="mb-3 fw-bold">Saran Zafer</h2>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">
-                                                    Account Mannager and Client Manager
-                                                </p>
-                                                
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                        </div>
-                                        
-                                    </div>  
-                                </div>
-        
-        
-                                <div class="col-md bg-light   ">
-                                    <div class="row ">
-                                        <div class="col-12 p-4  card">
-                                                <img class="mb-3" src=".//Template/3.webp" alt="" width="70px" height="70" style="border-radius: 50px;"> 
-                                                <h2 class="mb-3 fw-bold">Saran Zafer</h2>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">
-                                                    Account Mannager and Client Manager
-                                                </p>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                        </div>
-                                        
-                                    </div>  
-                                </div>
-        
-                                <div class="col-md bg-light   ">
-                                    <div class="row  ">
-                                        <div class="col-12 p-4 card  ">
-                                                <img class="mb-3" src="./Template/2.webp" alt="" width="70px" height="70" style="border-radius: 50px;"> 
-                                                <h2 class="mb-3 fw-bold">Saran Zafer</h2>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">
-                                                    Account Mannager and Client Manager
-                                                </p>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                        </div>
-                                        
-                                    </div>  
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="col-4 carousel-item ">
-
-                        <div>
-                            <div class="row  row-md-3 gap-4">
-
-                                <div class="col-md bg-light   " >
-                                    <div class="row  card">
-                                        <div class="col col-md-12 p-4 ">
-                                                <img class="mb-3" src="./Template/2.webp" alt="" width="70px" height="70" style="border-radius: 50px;"> 
-                                                <h2 class="mb-3 fw-bold">Saran Zafer</h2>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">
-                                                    Account Mannager and Client Manager
-                                                </p>
-                                                
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                        </div>
-                                        
-                                    </div>  
-                                </div>
-        
-        
-                                <div class="col-md bg-light   ">
-                                    <div class="row ">
-                                        <div class="col-12 p-4  card">
-                                                <img class="mb-3" src=".//Template/3.webp" alt="" width="70px" height="70" style="border-radius: 50px;"> 
-                                                <h2 class="mb-3 fw-bold">Saran Zafer</h2>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">
-                                                    Account Mannager and Client Manager
-                                                </p>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                        </div>
-                                        
-                                    </div>  
-                                </div>
-        
-                                <div class="col-md bg-light   ">
-                                    <div class="row  ">
-                                        <div class="col-12 p-4 card  ">
-                                                <img class="mb-3" src="./Template/2.webp" alt="" width="70px" height="70" style="border-radius: 50px;"> 
-                                                <h2 class="mb-3 fw-bold">Saran Zafer</h2>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">
-                                                    Account Mannager and Client Manager
-                                                </p>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                        </div>
-                                        
-                                    </div>  
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                    <div class="col-4 carousel-item ">
-
-                        <div>
-                            <div class="row  row-md-3 gap-4">
-
-                                <div class="col-md bg-light   " >
-                                    <div class="row  card">
-                                        <div class="col col-md-12 p-4 ">
-                                                <img class="mb-3" src="./Template/2.webp" alt="" width="70px" height="70" style="border-radius: 50px;"> 
-                                                <h2 class="mb-3 fw-bold">Saran Zafer</h2>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">
-                                                    Account Mannager and Client Manager
-                                                </p>
-                                                
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                        </div>
-                                        
-                                    </div>  
-                                </div>
-        
-        
-                                <div class="col-md bg-light   ">
-                                    <div class="row ">
-                                        <div class="col-12 p-4  card">
-                                                <img class="mb-3" src=".//Template/3.webp" alt="" width="70px" height="70" style="border-radius: 50px;"> 
-                                                <h2 class="mb-3 fw-bold">Saran Zafer</h2>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">
-                                                    Account Mannager and Client Manager
-                                                </p>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                        </div>
-                                        
-                                    </div>  
-                                </div>
-        
-                                <div class="col-md bg-light   ">
-                                    <div class="row  ">
-                                        <div class="col-12 p-4 card  ">
-                                                <img class="mb-3" src="./Template/2.webp" alt="" width="70px" height="70" style="border-radius: 50px;"> 
-                                                <h2 class="mb-3 fw-bold">Saran Zafer</h2>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">
-                                                    Account Mannager and Client Manager
-                                                </p>
-                                                <p class=" lh-1 pb-3 ta-juteify justify-content-start ">Unlock the power of artificial intelligence with Xact Mind's comprehensive AI development services. Our expert team combines cutting-edge technologies and innovative solutions to craft intelligent systems tailored to meet the evolving needs of businesses.<p>      
-                                        </div>
-                                        
-                                    </div>  
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    
-                      
-                    </div>
-
-
-                    
-                </div>
-                </div>
-                <a href="#ma" class="carousel-control-prev" data-slide="prev">
-                    <span class="carousel-control-prev-icon text-primary" ></span>
-                </a>
-
-                <a href="#ma" class="carousel-control-next" data-slide="next">
-                    <span class="carousel-control-next-icon "></span>
-                    <span class="visually-hidden">Previous</span>
-                </a>
-            </div>
-
-            </div>
-
-
-            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> form section  section 9>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>... -->
-
-
-
-                <div class="conatainer-fluid">
-                    <div class="container ">
-                        <div class="row bg-primary p-4">
-                        <div class="col">
-                             <span class="k  text-light d-flex tex" style="font-size: 10px; margin-top: 10px;"><span class="bg-secondary p-2">WHAT WE OFFER</span></span>
-                        <h1 class=" fw-bolder mb- fs-1 mt-5 text-light"> Let's Start a Conversation ​</h1></div>
-                        </div>
-                       
-                        
-                        <div class="row p-4 " style="background-image: linear-gradient(90deg, #E9E6EF 0%, #AFC6E6 100%);">
-                            <div class="col-sm-6 ">
-                                <h5 class="pt-lg-3  pt-md-2 pt-1  mb-4 fw-lg-bolder   fw-normal  lh-base"    >For inquiries or to avail of our top-notch AI services, please feel free to contact us through the following channels. We look forward to assisting you.<h5> 
-
-                                    <h5 class="  pt-md-2 pt-1   fw-bolder   fw-normal  lh-base"    >Call us at: +92-340-0860641<h5> 
-                                    <h5 class="  pt-md-2 pt-1   fw-bolder   fw-normal  lh-base"    >Call us at: +92-340-0860641<h5>
-                                        
-                                <h5 class="mt-5 pt-1   fw-bolder   fw-normal  lh-base text-reset"    >Your benefits:<h5> 
-
-                                    <div class="row">
-                                        <div class="col-6"><i> <img src="./Template/dot.png" alt="" width="20px"> <span class=" p-2 " style="font-size: 16px;"> 24/7 Quick Support</span> </i></div>
-                                        <div class="col-6"><i> <img src="./Template/dot.png" alt="" width="20px"> <span class=" p-2 " style="font-size: 16px;"> 24/7 Quick Support</span> </i></div>
-
-                                    </div>
-                                    <div class="row my-2">
-                                        <div class="col-6"><i> <img src="./Template/dot.png" alt="" width="20px"> <span class=" p-2 " style="font-size: 16px;"> 24/7 Quick Support</span> </i></div>
-                                        <div class="col-6"><i> <img src="./Template/dot.png" alt="" width="20px"> <span class=" p-2 " style="font-size: 16px;"> 24/7 Quick Support</span> </i></div>
-
-                                    </div>
-
-
-                                    <h4 class="mt-5 pt-1   fw-bolder   fw-normal  lh-base text-reset"    >What happens next?<h4> 
-                                        <div class="row my-2">
-
-                                            <div class="col-4 ">
-                                                <div class="row">
-                                                    <div class="col-2"> <h4>1</h4></div>
-                                                    <div class="col-10">
-                                                        <p style="font-size: 12px;">
-                                                            We schedule a call and consulting meeting</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-4 ">
-                                                <div class="row">
-                                                    <div class="col-2"> <h4>2</h4></div>
-                                                    <div class="col-10">
-                                                        <p style="font-size: 12px;">
-                                                            We schedule a call and consulting meeting</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-4 ">
-                                                <div class="row">
-                                                    <div class="col-2"> <h4>3</h4></div>
-                                                    <div class="col-10">
-                                                        <p style="font-size: 12px;">
-                                                            We schedule a call and consulting meeting</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                    
-
-                            </div>
-
-                            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  form  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.? -->
-
-                            <div class="col-lg-6 col-md-12">
-                                <div class="p-4 bg-light">
-                                  <h3>Schedule a Free Consultation</h3>
-                                  <form>
-                                    <div class="form-row d-flex gap-3">
-                                      <div class="form-group col-md-6">
-                                        <label for="firstName">First name</label>
-                                        <input type="text" class="form-control" id="firstName" placeholder="First name" required="">
-                                      </div>
-                                      <div class="form-group col-md-6">
-                                        <label for="lastName">Last name</label>
-                                        <input type="text" class="form-control" id="lastName" placeholder="Last name" required="">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="email">Your Email</label>
-                                      <input type="email" class="form-control" id="email" placeholder="Your Email" required="">
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="phone">Phone</label>
-                                      <input type="tel" class="form-control" id="phone" placeholder="Phone" required="">
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="helpOption">How Can We Help You?</label>
-                                      <select id="helpOption" class="form-control" required="">
-                                        <option selected="">Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
-                                        <option>Option 3</option>
-                                      </select>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="message">Message</label>
-                                      <textarea class="form-control" id="message" rows="4" placeholder="To better assist you, please describe how we can help..." required=""></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                                  </form>
-                                </div>
-                              </div>
-
-
-                            
-                            </div>
-
-                           
-
-                        
-                    </div>
-                </div>
-
-
-                            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FAq  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.. -->
-
-
-                            <div class="container p-3 m-auto"> <h2 class=" fw-bolder mb-3 fs-1 mt-3 " style="text-align: center; " > Frequently Asked Questions ​ ​</h2>
-                                <div class="container  p-5" style="background-color: #f5f5f5;" >
-
-                                    <div class="row ">
-                                            <div class="col">                                                
-                                                <a href="" class="text-decoration-none fs-4 text-dark fw-bold display-flex" data-toggle="collapse" data-target="#ceo">  
-                                                    <div class="row pb-4"   style="border-bottom: 1px #00000026 solid;" >
-                                                        <div class="col-10">
-                                                             What is Xact Mind, and what do they specialize in?
-                                                        </div>                                                       
-                                                        <div class="col-2" style=" text-align: end;  "   ><img src="./Template/arrow.png" alt="" width="20px"  ></div>
-                                                    </div>
-                                                     </a>
-                                                <div class="collapse mt-2" id="ceo">
-                                                    <p>
-                                                        Xact Mind is a leading AI development and solutions company in the UK and Kashmir(Pakistan), specializing in comprehensive AI solutions tailored to meet the evolving needs of customers and businesses across various industries.                                                     
-                                                    </p>
-                                                </div>
-                                            </div>                                      
-                                    </div>
-                                    
-
-                                    <div class="row mt-4">
-                                        <div class="col">                                                
-                                            <a href="" class="text-decoration-none fs-4 text-dark fw-bold display-flex" data-toggle="collapse" data-target="#ceo1">  
-                                                <div class="row pb-4"   style="border-bottom: 1px #00000026 solid;" >
-                                                    <div class="col-10">
-                                                         What is Xact Mind, and what do they specialize in?
-                                                    </div>                                                       
-                                                    <div class="col-2" style=" text-align: end;  "   ><img src="./Template/arrow.png" alt="" width="20px"  ></div>
-                                                </div>
-                                                 </a>
-                                            <div class="collapse mt-2" id="ceo1">
-                                                <p>
-                                                    Xact Mind is a leading AI development and solutions company in the UK and Kashmir(Pakistan), specializing in comprehensive AI solutions tailored to meet the evolving needs of customers and businesses across various industries.                                                     
-                                                </p>
-                                            </div>
-                                        </div>                                      
-                                    </div>
-                                    <div class="row mt-4">
-                                        <div class="col">                                                
-                                            <a href="" class="text-decoration-none fs-4 text-dark fw-bold display-flex" data-toggle="collapse" data-target="#ceo2">  
-                                                <div class="row pb-4"   style="border-bottom: 1px #00000026 solid;" >
-                                                    <div class="col-10">
-                                                         What is Xact Mind, and what do they specialize in?
-                                                    </div>                                                       
-                                                    <div class="col-2" style=" text-align: end;  "   ><img src="./Template/arrow.png" alt="" width="20px"  ></div>
-                                                </div>
-                                                 </a>
-                                            <div class="collapse mt-2" id="ceo2">
-                                                <p>
-                                                    Xact Mind is a leading AI development and solutions company in the UK and Kashmir(Pakistan), specializing in comprehensive AI solutions tailored to meet the evolving needs of customers and businesses across various industries.                                                     
-                                                </p>
-                                            </div>
-                                        </div>                                      
-                                    </div>
-
-                                    <div class="row mt-4">
-                                        <div class="col">                                                
-                                            <a href="" class="text-decoration-none fs-4 text-dark fw-bold display-flex" data-toggle="collapse" data-target="#ceo3">  
-                                                <div class="row pb-4"   style="border-bottom: 1px #00000026 solid;" >
-                                                    <div class="col-10">
-                                                         What is Xact Mind, and what do they specialize in?
-                                                    </div>                                                       
-                                                    <div class="col-2" style=" text-align: end;  "   ><img src="./Template/arrow.png" alt="" width="20px"  ></div>
-                                                </div>
-                                                 </a>
-                                            <div class="collapse mt-2" id="ceo3">
-                                                <p>
-                                                    Xact Mind is a leading AI development and solutions company in the UK and Kashmir(Pakistan), specializing in comprehensive AI solutions tailored to meet the evolving needs of customers and businesses across various industries.                                                     
-                                                </p>
-                                            </div>
-                                        </div>                                      
-                                    </div>
-
-                                    <div class="row mt-4">
-                                        <div class="col">                                                
-                                            <a href="" class="text-decoration-none fs-4 text-dark fw-bold display-flex" data-toggle="collapse" data-target="#ceo4">  
-                                                <div class="row pb-4"   style="border-bottom: 1px #00000026 solid;" >
-                                                    <div class="col-10">
-                                                         What is Xact Mind, and what do they specialize in?
-                                                    </div>                                                       
-                                                    <div class="col-2" style=" text-align: end;  "   ><img src="./Template/arrow.png" alt="" width="20px"  ></div>
-                                                </div>
-                                                 </a>
-                                            <div class="collapse mt-2" id="ceo4">
-                                                <p>
-                                                    Xact Mind is a leading AI development and solutions company in the UK and Kashmir(Pakistan), specializing in comprehensive AI solutions tailored to meet the evolving needs of customers and businesses across various industries.                                                     
-                                                </p>
-                                            </div>
-                                        </div>                                      
-                                    </div>
-
-                                    
-
-
-                                </div>
-
-                                <div class=" d-flex justify-content-center py-4 ">
-                                    <button type="button" class="btn btn dark  btn-primary   " style="padding: 10px 20px;"   >View All Services</button>
-                                  </div>
-
-                            </div>
-
-
-
-                            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Section 11 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>?+ -->
-
-
-
-                            <div class="container-fluid " style="background-color: black;">
-
-                            
-
-                            <div class=" container  text-white py-5 px-3">
-
-                                <div class="row pt-4">
-                                     <div class="col-md-6">
-
-                                        <h5 class="text-light fw-bold display-6 fs-4 mb-3">Services</h5>
-                                        <div class="row">
-                                        <div class="col-6 mb-4">                                            
-                                            <ul class="list-unstyled "  >
-                                              <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;  ">AI Development Services</a></li>
-                                              <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;  ">Machine and Deep Learning</a></li>
-                                              <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;  ">Data Analytics and Visualization</a></li>
-                                              <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;  ">Natural Language Processing</a></li>
-                                              <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;  ">Chatbots &amp; Generative AI</a></li>
-                                              <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;  ">Web Scraping and Automation</a></li>   
-                                            </ul>
-                                          </div>
-                                          <div class="col-6 mb-4">                                         
-                                            <ul class="list-unstyled "  style="color: #f5f5f1b3; ">
-                                                <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;  ">Web Development </a></li>
-                                              <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;  "> Prompt Engineering</a></li>
-                                              <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;  ">Data Analytics and Visualization</a></li>
-                                              <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;  "> Custom Software Development</a></li>
-                                              <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;  "> UI/UX Design </a></li>
-                                              <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;  ">Digital Marketing</a></li>   
-                                                                                        
-                                            </ul>
-                                          </div>
-                                        </div>
-
-
-                                        <h5 class="text-light fw-bold display-6 fs-4 mb-3">About & Resources</h5>
-                                        <div class="row">
-                                        <div class="col-6 mb-4" style="color: #f5f5f1b3;">                                            
-                                            <ul class="list-unstyled "  style="color: #f5f5f1b3; ;" >
-                                                <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;">Client Support </a></li>
-                                                <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;"> Privacy Policy</a></li>
-                                                <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;">Contact</a></li>
-                                               
-                                            </ul>
-                                          </div>
-
-                                          <div class="col-6 mb-4">                                         
-                                            <ul class="list-unstyled " style="color: #f5f5f1b3; ;">
-                                                <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;">Portfolio </a></li>
-                                                <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;"> Our Team</a></li>
-                                                <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;">FAQ</a></li>
-                                                <li class="mb-2"><a href="" class="text-decoration-none " style="color: #f5f5f1b3;">Blog</a></li>
-
-                                                                                     
-                                            </ul>
-                                          </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-10">
-                                                <form class="mt-3">
-                                            <div class="form-group mb-2">
-                                              <input type="email" class="form-control  text-light " placeholder="Don't miss out updates..." style="background-color: black; border-radius: 0px;">
-                                            </div>
-                                            <div class="form-check mb-2">
-                                              <input type="checkbox" class="form-check-input" id="privacyPolicy">
-                                              <label class="form-check-label" for="privacyPolicy">I agree to the Privacy Policy</label>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary mt-2 btn-block px-3 ">Send </button>
-                                          </form>
-
-                                            </div>
-                                        </div>
-
-                                        
-                                     </div>
-
-                                     <div class="col-md-6">
-                                        <a href=""><img src="./fffff.png" alt="" width="100%"></a>
-                                     </div>
-                                </div>
-                               
-
-
-                                </div>
-                            </div>
-
-                          
-                                   <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>... Footer >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-
-                    
-
-                <footer  class="container-fluid">
-                    <div class=" container  text-dark py-4 px-3">
-                        <div class="row p-2 gap-x-5">
-                            <div class="col-4">
-                                
-                                    
-                                    <p  style=" padding-left: 16px; border-left:4px rgba(72, 71, 71, 0.138) solid; font-size: 14px;">FWM3+J59, Village Kurti, Kotli, AJ&K </p>
-                                    <p  style=" padding-left: 20px;  font-size: 14px;">FWM3+J59, Village Kurti, Kotli, AJ&K </p>
-                                    
-                            
-                            </div>
-                            <div class="col-4 pl-4">
-                                <p  style=" padding-left: 16px; border-left:4px rgba(72, 71, 71, 0.138) solid; font-size: 14px; margin-bottom: 1px;" >Phone(PK): +92-340-0860641 </p>
-                                <p  style=" padding-left: 20px;  font-size: 14px; margin-bottom: 1px;"  >Phone(UK): +44-7939-444967</p>
-                                <p  style=" padding-left: 20px;  font-size: 14px;">Email: info@xactmind.com</p>
-                            </div>
-                            <div class="col-4">
-
-                                <div class="row">
-                                    <div class="col-4"><img class="mb-3" src="./Template/2.webp" alt="" width="70px" height="70" style="border-radius: 50px;"> 
-                                    <Span><b>Linkedin</b></Span>
-                                </div>
-                                <div class="col-4"><img class="mb-3" src="./Template/2.webp" alt="" width="70px" height="70" style="border-radius: 50px;"> 
-                                    <Span><b>Facebook</b></Span>
-                                </div>
-                                <div class="col-4"><img class="mb-3" src="./Template/2.webp" alt="" width="70px" height="70" style="border-radius: 50px;"> 
-                                    <Span><b>Emain</b></Span>
-                                </div>
-                                   
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class=" " style="text-align: center; " > 
-                            © 2024 <a href=""  class="text-decoration-none">
-                                Xact Mind</a>
-                                <a href="" class="text-decoration-none "  style="color: black;">
-                                    Privacy Policy</a>
-                              ​</div>
-                        
-
-                    </div>
-
-
-
-                </footer>
-           
-
-
+    
 </body>
-
 </html>
+
+
+</main>
+</body>
+</html>
+
